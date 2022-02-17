@@ -4,9 +4,9 @@
     - name: checkout box locally
       git:
         repo: '{{ cookiecutter.repo_url }}'
-        dest: '{{ inventory_dir }}/box'
+        dest: {% raw %}'{{ inventory_dir }}/box'{% endraw %}
         force: yes
-        version: '{{ box_version | default("master") }}'
+        version: {% raw %}'{{ box_version | default("master") }}'{% endraw %}
       delegate_to: localhost
     
     - name: install required ansible-galaxy roles
