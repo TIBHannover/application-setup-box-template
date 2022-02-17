@@ -2,7 +2,7 @@ stages:
   - deploy
 
 .deploy_job:
-  image: registry.gitlab.com/tibhannover/docker-ansible-playbook:2.9.22
+  image: willhallonline/ansible:2.11-alpine-3.15
   stage: deploy
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -14,56 +14,21 @@ stages:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - ansible-playbook -v -i ${INVENTORY_FILE} prerequisites.yml
-    - ansible-playbook -v -i ${INVENTORY_FILE} ${PLAYBOOK}
+    - ansible-playbook -v -i ${INVENTORY_FILE} ${PLAYBOOK} --extra-vars "gitlab_private_token=$CI_JOB_TOKEN"
 
-#scheduled deploy to Develop:
-#  variables:
-#    INVENTORY_FILE: inventory_DEV.yml
-#    PLAYBOOK: oersi-playbook.yml
-#  extends: .deploy_job
-#  only:
-#    - schedules
-
-deploy to Develop:
-  variables:
-    INVENTORY_FILE: inventory_DEV.yml
-    PLAYBOOK: oersi-playbook.yml
-  extends: .deploy_job
-  only:
-    - master
-  when: manual
-
-Develop Backend Deployment:
-  variables:
-    INVENTORY_FILE: inventory_DEV.yml
-    PLAYBOOK: oersi-backend.yml
-  extends: .deploy_job
-  only:
-    - master
-  when: manual
-
-Develop ETL Deployment:
-  variables:
-    INVENTORY_FILE: inventory_DEV.yml
-    PLAYBOOK: oersi-etl.yml
-  extends: .deploy_job
-  only:
-    - master
-  when: manual
-
-Develop Frontend Deployment:
-  variables:
-    INVENTORY_FILE: inventory_DEV.yml
-    PLAYBOOK: oersi-frontend.yml
-  extends: .deploy_job
-  only:
-    - master
-  when: manual
-
-deploy to Test:
+Test Update:
   variables:
     INVENTORY_FILE: inventory_TEST.yml
-    PLAYBOOK: oersi-playbook.yml
+    PLAYBOOK: box/ansible/playbook.yml
+  extends: .deploy_job
+  only:
+    - master
+  when: manual
+
+Prod Update:
+  variables:
+    INVENTORY_FILE: inventory_PROD.yml
+    PLAYBOOK: box/ansible/playbook.yml
   extends: .deploy_job
   only:
     - master
