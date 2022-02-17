@@ -4,7 +4,7 @@ This template should help to set up a new "application-setup-box" (or "ansible-v
 
 The integration of [Vagrant](https://www.vagrantup.com/) also makes it possible to execute the installation in a local virtual box on the user's computer. This allows the installation / software to be tested very easily and quickly.
 
-**TODO** Additionally, a configuration example is provided that allows easy integration of the installation scripts into a CI process.
+Additionally, a configuration example is provided that allows easy integration of the installation scripts into a CI process.
 
 ## Requirements
 

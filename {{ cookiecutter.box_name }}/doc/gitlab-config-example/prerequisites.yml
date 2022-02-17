@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+    - name: checkout box locally
+      git:
+        repo: '{{ cookiecutter.repo_url }}'
+        dest: '{{ inventory_dir }}/box'
+        force: yes
+        version: '{{ box_version | default("master") }}'
+      delegate_to: localhost
+    
+    - name: install required ansible-galaxy roles
+      shell: ansible-galaxy install -r box/ansible/requirements.yml
+      delegate_to: localhost
