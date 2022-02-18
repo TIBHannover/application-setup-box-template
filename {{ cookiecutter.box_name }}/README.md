@@ -26,8 +26,8 @@ When the installation is complete, {{ cookiecutter.app_name }} will be running o
 * `vagrant up` - Creates a new VM and runs the Ansible playbook, if no VM exists. Turn on a shut down VM, if the VM was created before
 * `vagrant halt` - Shuts down the VM
 * `vagrant destroy` - Removes the VM
-* `vagrant provision` - Re-runs the Ansible playbook without restarting the VM
 * `vagrant reload --provision` - Restarts the VM and re-runs the Ansible playbook 
+* `vagrant provision` - Re-runs the Ansible playbook without updating the ansible-scripts and without restarting the VM
 * `vagrant ssh` - SSH into the running VM
 
 ## Integration into a CI/CD process
